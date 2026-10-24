@@ -997,7 +997,7 @@ html { scrollbar-color: #9db1cc transparent; scrollbar-width: thin; }
      Routes the guide does NOT name are null; the UI then says
      "not connected yet" instead of guessing a URL.
      --------------------------------------------------------------- */
-  const API_BASE_URL ='https://msme-cash-flow-project.onrender.com  ';
+ const API_BASE_URL = 'https://msme-cash-flow-project.onrender.com';
   const CONFIG = {
     api: {
       upload: '/api/statements/upload',                 // POST multipart, field name "file"
@@ -1191,15 +1191,23 @@ html { scrollbar-color: #9db1cc transparent; scrollbar-width: thin; }
   async function apiFetch(url, options) {
     if (!url) return { ok: false, status: 0, data: null, error: 'API route not configured', notConnected: true };
     let res;
-    try {
+    
+try {
   const fullUrl = /^https?:\/\//i.test(url)
     ? url
     : API_BASE_URL.replace(/\/$/, '') + url;
 
   res = await fetch(fullUrl, options);
 } catch (e) {
-      return { ok: false, status: 0, data: null, error: 'Cannot reach the server. Check that the application is running and try again.', network: true };
-    }
+  return {
+    ok: false,
+    status: 0,
+    data: null,
+    error: 'Cannot reach the server. Check that the application is running and try again.',
+    network: true
+  };
+}
+
     let text = '';
     try { text = await res.text(); } catch (e) { text = ''; }
     let data = null;
